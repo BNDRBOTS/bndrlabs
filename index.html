@@ -1,3 +1,5 @@
+Sending just in case:
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -327,18 +329,15 @@ main{position:relative;z-index:20;pointer-events:none;}
 <div id="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="modal-title" aria-hidden="true">
   <div id="modal-box">
     <div class="modal-header">
-      <span class="modal-title" id="modal-title">Begin the Build // Contact</span>
+      <span class="modal-title" id="modal-title">Start the Job // Contact</span>
       <button id="modal-close" aria-label="Close">✕</button>
     </div>
     <div id="modal-body">
-      <!-- FormSubmit form – replace action email with your own -->
-      <form action="https://formsubmit.co/your-email@example.com" method="POST">
+      <form action="https://formsubmit.co/bndr.labs@gmail.com" method="POST">
         <!-- honeypot (optional) -->
         <input type="text" name="_honey" style="display:none">
         <!-- disable captcha for testing – enable if needed -->
         <input type="hidden" name="_captcha" value="false">
-        <!-- custom thank‑you page (replace with your URL) -->
-        <input type="hidden" name="_next" value="https://bndr.llc/thanks.html">
         <!-- form fields -->
         <div class="form-group">
           <label class="form-label" for="name">Name</label>
@@ -353,7 +352,6 @@ main{position:relative;z-index:20;pointer-events:none;}
           <textarea class="form-input" name="message" id="message" rows="4" placeholder="Tell us about your project..." required></textarea>
         </div>
         <button class="form-submit" type="submit">Send Message</button>
-        <!-- instructions for user: replace the email in action, and thank‑you page URL -->
         <p style="font-family:'Courier New',monospace; font-size:9px; color:var(--mist); margin-top:16px; text-align:center;">← Replace with your FormSubmit email</p>
       </form>
     </div>
