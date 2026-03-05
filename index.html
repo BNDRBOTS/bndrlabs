@@ -571,6 +571,15 @@
         outline: 1px solid var(--neon-cyan);
         outline-offset: 3px;
     }
+
+    /* ── MOBILE PERFORMANCE ──────────────────────────────── */
+    @media (max-width: 768px) {
+        #grain-layer, #arch-grid, .bg-gradient-overlay,
+        #bg-canvas, #particle-canvas { display: none !important; }
+        #contact-btn { backdrop-filter: none; -webkit-backdrop-filter: none; animation: none; }
+        .card { will-change: auto; }
+        .vel-skew, .marquee-track, .char { will-change: auto; }
+    }
 </style>
 </head>
 <body>
@@ -863,7 +872,7 @@ class GhostEngine {
         this.mouse       = { x: innerWidth/2, y: innerHeight/2, tX: innerWidth/2, tY: innerHeight/2 };
         this.grainFrames = 0;
         this.cards       = [];
-        this.audio       = { ctx: null, enabled: true };
+        this.audio       = { ctx: null, enabled: !(innerWidth <= 768) };
         this.activeUrl   = '';
         this.socialsDropped = false;
 
@@ -943,6 +952,7 @@ class GhostEngine {
     }
 
     drawCanvases() {
+        if (this.isMobile) return;
         const luma = 2 + Math.sin(this.scroll.current * .005) * 3;
         this.bgX.fillStyle = `hsl(0,0%,${luma}%)`;
         this.bgX.fillRect(0, 0, this.bgC.width, this.bgC.height);
@@ -1046,22 +1056,26 @@ class GhostEngine {
             }
             toggle.innerText = this.audio.enabled ? 'AUDIO_ON' : 'AUDIO_OFF';
         });
+        if (this.isMobile) toggle.innerText = 'AUDIO_OFF';
     }
 
     playTick(vel) {
         if (!this.audio.enabled || !this.audio.ctx || vel < 5) return;
-        if (performance.now() - (this.lastTick || 0) < 50) return;
+        const tickInterval = this.isMobile ? 250 : 50;
+        if (performance.now() - (this.lastTick || 0) < tickInterval) return;
         this.lastTick = performance.now();
-        const osc = this.audio.ctx.createOscillator();
-        const gain = this.audio.ctx.createGain();
-        osc.connect(gain); gain.connect(this.audio.ctx.destination);
-        osc.type = 'sine';
-        osc.frequency.setValueAtTime(100 + vel * 2, this.audio.ctx.currentTime);
-        osc.frequency.exponentialRampToValueAtTime(.01, this.audio.ctx.currentTime + .1);
-        const vol = Math.min(.1, vel / 1000);
-        gain.gain.setValueAtTime(vol, this.audio.ctx.currentTime);
-        gain.gain.exponentialRampToValueAtTime(.001, this.audio.ctx.currentTime + .05);
-        osc.start(); osc.stop(this.audio.ctx.currentTime + .1);
+        try {
+            const osc = this.audio.ctx.createOscillator();
+            const gain = this.audio.ctx.createGain();
+            osc.connect(gain); gain.connect(this.audio.ctx.destination);
+            osc.type = 'sine';
+            osc.frequency.setValueAtTime(100 + vel * 2, this.audio.ctx.currentTime);
+            osc.frequency.exponentialRampToValueAtTime(20, this.audio.ctx.currentTime + .1);
+            const vol = Math.min(.1, vel / 1000);
+            gain.gain.setValueAtTime(vol, this.audio.ctx.currentTime);
+            gain.gain.exponentialRampToValueAtTime(.001, this.audio.ctx.currentTime + .05);
+            osc.start(); osc.stop(this.audio.ctx.currentTime + .1);
+        } catch(e) {}
     }
 
     initNav() {
@@ -1079,7 +1093,8 @@ class GhostEngine {
     // 11 external GitHub Pages sites loading simultaneously = main thread seizure.
     // Live preview is still available via the card modal (click any card).
     initCards() {
-        PROJECTS.forEach((project, i) => {
+        const list = this.isMobile ? PROJECTS.slice(0, 6) : PROJECTS;
+        list.forEach((project, i) => {
             const card = document.createElement('div');
             card.className = 'card';
             card.setAttribute('role', 'button');
@@ -1292,8 +1307,10 @@ class GhostEngine {
     }
 
     render() {
-        this.updateCursor();
-        this.updateGrain();
+        if (!this.isMobile) {
+            this.updateCursor();
+            this.updateGrain();
+        }
         this.drawCanvases();
         this.updateHelix();
         requestAnimationFrame(() => this.render());
