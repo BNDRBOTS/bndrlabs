@@ -477,7 +477,7 @@
     /* ── SOCIAL GRID ────────────────────────────────────────── */
     .social-overline {
         font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.22em;
-        color: rgba(255,255,255,0.25); margin-top: 10px; margin-bottom: 2.5rem;
+        color: rgba(255,255,255,0.5); margin-top: 10px; margin-bottom: 2.5rem;
         text-transform: uppercase;
     }
     .social-grid {
@@ -493,8 +493,8 @@
         text-decoration: none; color: var(--bone);
         font-family: var(--font-mono); font-size: 10px;
         letter-spacing: 0.15em; text-transform: uppercase;
-        border: 1px solid rgba(255,255,255,0.05);
-        background: rgba(255,255,255,0.015);
+        border: 1px solid rgba(255,255,255,0.12);
+        background: rgba(255,255,255,0.04);
         position: relative; overflow: hidden;
         transition: border-color .35s, color .35s, background .35s;
     }
@@ -518,18 +518,18 @@
     .si svg { width: 20px; height: 20px; }
     .social-link:hover .si { transform: scale(1.15); }
     .s-idx {
-        font-size: 9px; color: rgba(255,255,255,0.18); min-width: 22px;
+        font-size: 9px; color: rgba(255,255,255,0.45); min-width: 22px;
         flex-shrink: 0; transition: color .3s;
     }
     .social-link:hover .s-idx { color: var(--brand, rgba(255,255,255,0.5)); }
     .s-name { flex: 1; }
     .s-handle {
-        font-size: 8px; color: rgba(255,255,255,0.22); letter-spacing: 0.08em;
+        font-size: 8px; color: rgba(255,255,255,0.55); letter-spacing: 0.08em;
         overflow: hidden; text-overflow: ellipsis; white-space: nowrap; max-width: 140px;
     }
     @media (max-width: 480px) { .s-handle { display: none; } }
     .s-arr {
-        font-size: 14px; color: rgba(255,255,255,0.15);
+        font-size: 14px; color: rgba(255,255,255,0.4);
         transition: transform .3s, color .3s; flex-shrink: 0; line-height: 1;
     }
     .social-link:hover .s-arr {
@@ -539,7 +539,7 @@
 
     /* ── EDGE GLOW ACCENTS ──────────────────────────────────── */
     .progress-bottom-fill {
-        background: linear-gradient(90deg, var(--neon-cyan), var(--neon-pink));
+        background: var(--neon-cyan);
     }
     .progress-side-fill {
         background: linear-gradient(180deg, var(--neon-cyan), var(--neon-pink));
@@ -1239,7 +1239,7 @@ class GhostEngine {
                 this.scroll.target = self.progress * (innerHeight * 6);
                 this.dom.progB.style.transform = `scaleX(${self.progress})`;
                 this.dom.progS.style.transform = `scaleY(${self.progress})`;
-                if (self.progress >= 0.88) this.dropSocials();
+                if (self.progress >= 0.20) this.dropSocials();
             },
         });
 
