@@ -767,7 +767,6 @@ html[data-theme="light"] .fw-bold {
 </head>
 <body>
 
-<!-- OVERLAYS -->
 <div id="arch-grid" aria-hidden="true">
     <div></div><div></div><div></div><div></div>
     <div></div><div></div><div></div><div></div>
@@ -779,11 +778,9 @@ html[data-theme="light"] .fw-bold {
 <div class="bg-gradient-overlay" aria-hidden="true"></div>
 <div id="ambient-glow" aria-hidden="true"></div>
 
-<!-- CURSOR -->
 <div id="cursor-ring" aria-hidden="true"><span id="cursor-label"></span></div>
 <div id="cursor-dot" aria-hidden="true"></div>
 
-<!-- HUD / NAV -->
 <header>
     <div class="hud hud-top-left magnetic-wrap" data-magnetic="link" data-label="HOME"
          onclick="window.scrollTo({top:0,behavior:'smooth'})" role="link" tabindex="0"
@@ -816,7 +813,6 @@ html[data-theme="light"] .fw-bold {
     </nav>
 </header>
 
-<!-- FOOTER -->
 <footer aria-label="Site controls">
     <div class="footer-left">
         <span class="footer-brand">BNDR LLC 2026 ALL RIGHTS RESERVED</span>
@@ -829,11 +825,9 @@ html[data-theme="light"] .fw-bold {
     </div>
 </footer>
 
-<!-- PROGRESS BARS -->
 <div class="progress-bottom" aria-hidden="true"><div class="progress-bottom-fill" id="prog-b"></div></div>
 <div class="progress-side"   aria-hidden="true"><div class="progress-side-fill"   id="prog-s"></div></div>
 
-<!-- PERSISTENT CONTACT BUTTON -->
 <div id="contact-btn-wrap">
     <button id="contact-btn" aria-label="Get in touch with BNDR LLC">
         <svg class="cbtn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"
@@ -844,24 +838,20 @@ html[data-theme="light"] .fw-bold {
     </button>
 </div>
 
-<!-- 3D CAROUSEL -->
 <div id="viewport-3d" aria-hidden="true">
     <div id="carousel-container" class="magnetic-wrap" data-magnetic="card" data-label="⟷"></div>
 </div>
 
-<!-- MOBILE CAROUSEL NAV -->
 <div id="carousel-nav" aria-label="Carousel controls">
     <button id="carousel-prev" aria-label="Previous project" type="button">&#8592;</button>
     <button id="carousel-next" aria-label="Next project"     type="button">&#8594;</button>
 </div>
 
-<!-- MOBILE SECTION NAV -->
 <div id="section-nav" aria-label="Section navigation">
     <button id="sec-up" aria-label="Previous section" type="button">&#8593;</button>
     <button id="sec-dn" aria-label="Next section"     type="button">&#8595;</button>
 </div>
 
-<!-- CARD MODAL -->
 <div id="card-modal" role="dialog" aria-modal="true" aria-label="Project preview" aria-hidden="true">
     <div class="modal-bg"></div>
     <div class="modal-content">
@@ -875,7 +865,6 @@ html[data-theme="light"] .fw-bold {
     </div>
 </div>
 
-<!-- CONTACT MODAL -->
 <div id="touch-modal" role="dialog" aria-modal="true" aria-label="Contact BNDR LLC" aria-hidden="true">
     <div class="modal-bg"></div>
     <div class="touch-inner">
@@ -905,13 +894,13 @@ html[data-theme="light"] .fw-bold {
     </div>
 </div>
 
-<!-- ═══════════════════════════════════════════════════════════════ -->
 <main>
 
     <section id="sec-hero" aria-label="HERO">
         <div class="content-block vel-skew">
-            <img src="https://www.dropbox.com/scl/fi/vozyauakb51t3j3vhdfan/BNDRUNLIMITEDWHITETRSPRT.png?rlkey=ak1ppjjzvfd9g1l5op4vq2wvx&st=q13cd9gg&raw=1" alt="BNDR UNLIMITED" class="hero-logo-reveal" style="display: block; width: clamp(280px, 75vw, 950px); max-width: 100%; height: auto; margin: 2vh 0 4vh 0;">
-            <img src="https://www.dropbox.com/scl/fi/vozyauakb51t3j3vhdfan/BNDRUNLIMITEDWHITETRSPRT.png?rlkey=ak1ppjjzvfd9g1l5op4vq2wvx&st=q13cd9gg&raw=1" alt="BNDR UNLIMITED" class="hero-logo-reveal" style="display: block; width: clamp(320px, 85vw, 1200px); height: auto; max-width: 100%; margin: 3rem 0; transform-origin: left center;">
+            <div class="sec-title left"><span>01</span><div class="line"></div></div>
+            <img src="https://www.dropbox.com/scl/fi/vozyauakb51t3j3vhdfan/BNDRUNLIMITEDWHITETRSPRT.png?rlkey=ak1ppjjzvfd9g1l5op4vq2wvx&st=q13cd9gg&raw=1" alt="BNDR UNLIMITED" class="hero-logo-reveal" style="display: block; width: clamp(280px, 70vw, 800px); max-width: 100%; height: auto; margin: 3vh 0 4vh 0; flex-shrink: 0; object-fit: contain; object-position: left center;">
+            <div class="glass-panel" style="max-width: 720px;">
                 <p>
                     I offer One-Page Landing Sites, Three-Page Websites, and 30-Day BNDR Unlimited™, all with intentionally limited client capacity.
                 </p>
@@ -1699,34 +1688,35 @@ class GhostEngine {
     }
 
     initScrollTriggers() {
-        gsap.utils.toArray('.split-text').forEach(el => {
-            gsap.to(el.querySelectorAll('.char'), {
-                y: '0%',
-                stagger: 0.02,
-                duration: 1,
-                ease: "power4.out",
-                scrollTrigger: { trigger: el, start: "top 90%" }
-            });
-        });
+        gsap.utils.toArray('.split-text').forEach(el => {
+            gsap.to(el.querySelectorAll('.char'), {
+                y: '0%',
+                stagger: 0.02,
+                duration: 1,
+                ease: "power4.out",
+                scrollTrigger: { trigger: el, start: "top 90%" }
+            });
+        });
 
-        gsap.utils.toArray('.sec-title .line').forEach(el => {
-            gsap.fromTo(el, { scaleX: 1 }, {
-                scaleX: 1, duration: 1.2, ease: "power3.inOut",
-                scrollTrigger: { trigger: el, start: "top 95%" }
-            });
-        });
+        gsap.utils.toArray('.sec-title .line').forEach(el => {
+            gsap.fromTo(el, { scaleX: 1 }, {
+                scaleX: 1, duration: 1.2, ease: "power3.inOut",
+                scrollTrigger: { trigger: el, start: "top 95%" }
+            });
+        });
 
-        gsap.fromTo('.hero-logo-reveal', 
-            { y: 60, opacity: 0 }, 
-            { y: 0, opacity: 1, duration: 1.2, ease: "power4.out", scrollTrigger: { trigger: '#sec-hero', start: "top 90%" } }
-        );
+        gsap.fromTo('.hero-logo-reveal', 
+            { y: 60, opacity: 0 }, 
+            { y: 0, opacity: 1, duration: 1.2, ease: "power4.out", scrollTrigger: { trigger: '#sec-hero', start: "top 90%" } }
+        );
 
-        ScrollTrigger.create({
-            trigger: '.pin-reveal-wrap',
-            start: "top 85%",
-            onEnter: () => document.querySelector('.pin-reveal-wrap').classList.add('revealed'),
-            once: true
-        });
+        ScrollTrigger.create({
+            trigger: '.pin-reveal-wrap',
+            start: "top 85%",
+            onEnter: () => document.querySelector('.pin-reveal-wrap').classList.add('revealed'),
+            once: true
+        });
+
         ScrollTrigger.create({
             trigger: '#sec-pricing',
             start: "top 70%",
