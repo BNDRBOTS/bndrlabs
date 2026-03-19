@@ -861,14 +861,13 @@ html[data-theme="light"] .fw-bold {
 
 <main>
 
-<section id="sec-hero" aria-label="HERO">
+    <section id="sec-hero" aria-label="HERO">
         <div class="content-block vel-skew" style="display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center;">
-            <div class="sec-title" style="margin-bottom: 2vh; align-self: flex-start; padding-left: 20px;"><span>01</span><div class="line"></div></div>
             
             <img src="https://www.dropbox.com/scl/fi/vozyauakb51t3j3vhdfan/BNDRUNLIMITEDWHITETRSPRT.png?rlkey=ak1ppjjzvfd9g1l5op4vq2wvx&st=q13cd9gg&raw=1" 
                  alt="BNDR UNLIMITED" 
                  class="hero-logo-reveal" 
-                 style="display: block; width: 100%; max-width: 600px; height: auto; object-fit: contain; margin: 0 auto 4vh auto; flex-shrink: 0;">
+                 style="display: block; width: 100%; max-width: 1200px; height: auto; object-fit: contain; margin: 0 auto 4vh auto; flex-shrink: 0;">
             
             <div class="glass-panel" style="max-width: 720px; text-align: left; position: relative; z-index: 2;">
                 <p>
@@ -887,9 +886,9 @@ html[data-theme="light"] .fw-bold {
             </div>
         </div>
     </section>
+
     <section id="sec-partnership" aria-label="THE PARTNERSHIP">
         <div class="content-block vel-skew">
-            <div class="sec-title left"><span>02</span><div class="line"></div></div>
             <h2 class="kinetic-text split-text">THE</h2>
             <h2 class="kinetic-text split-text">PARTNERSHIP</h2>
             <div class="glass-panel" style="margin-top:2.5rem; max-width: 800px;">
@@ -911,7 +910,6 @@ html[data-theme="light"] .fw-bold {
 
     <section id="sec-background" aria-label="BACKGROUND">
         <div class="content-block vel-skew">
-            <div class="sec-title left"><span>03</span><div class="line"></div></div>
             <h2 class="kinetic-text split-text">BACKGROUND</h2>
             <div class="glass-panel" style="margin-top:2.5rem; max-width: 900px;">
                 <p>I’m Scott — 20 years in sales, training, and management taught me what really drives decisions and builds lasting client loyalty. My work is shaped by deep conversations with business owners: what excites them, what’s worth the sacrifice, and what builds trust in their direction.</p>
@@ -924,7 +922,6 @@ html[data-theme="light"] .fw-bold {
 
     <section id="sec-how-it-works" aria-label="HOW IT WORKS">
         <div class="content-block vel-skew">
-            <div class="sec-title left"><span>04</span><div class="line"></div></div>
             <h2 class="kinetic-text split-text">HOW IT</h2>
             <h2 class="kinetic-text split-text">WORKS</h2>
             <div class="glass-panel" style="margin-top:2.5rem; max-width: 900px;">
@@ -953,7 +950,6 @@ html[data-theme="light"] .fw-bold {
 
     <section id="sec-work" aria-label="SELECTED WORK">
         <div class="content-block vel-skew">
-            <div class="sec-title left"><span>05</span><div class="line"></div></div>
             <h2 class="kinetic-text split-text">SELECTED</h2>
             <h2 class="kinetic-text split-text">WORK</h2>
             <p class="work-overline">Click to preview</p>
@@ -963,7 +959,6 @@ html[data-theme="light"] .fw-bold {
 
     <section id="sec-apps" aria-label="WEB APPS">
         <div class="content-block vel-skew">
-            <div class="sec-title left"><span>06</span><div class="line"></div></div>
             <h2 class="kinetic-text split-text">WEB</h2>
             <h2 class="kinetic-text split-text">APPS</h2>
             <p class="work-overline">Click to preview</p>
@@ -973,7 +968,6 @@ html[data-theme="light"] .fw-bold {
 
     <section id="sec-pricing" aria-label="PRICING">
         <div class="content-block vel-skew pin-reveal-wrap">
-            <div class="sec-title left"><span>07</span><div class="line"></div></div>
             <h2 class="kinetic-text split-text">PRICING</h2>
             
             <div class="pricing-grid" style="margin-top:2.5rem;">
@@ -1020,7 +1014,6 @@ html[data-theme="light"] .fw-bold {
 
     <section id="sec-faq" aria-label="FAQ">
         <div class="content-block vel-skew">
-            <div class="sec-title left"><span>08</span><div class="line"></div></div>
             <h2 class="kinetic-text split-text">FAQ</h2>
             <div class="glass-panel" style="margin-top: 2.5rem; max-width: 1000px;">
                 <div class="faq-item">
@@ -1093,7 +1086,6 @@ html[data-theme="light"] .fw-bold {
 
     <section id="sec-connect" aria-label="CONNECT">
         <div class="content-block vel-skew">
-            <div class="sec-title left"><span>09</span><div class="line"></div></div>
             <h2 class="kinetic-text split-text">CONNECT</h2>
             <div class="social-grid" id="social-grid" role="list" aria-label="Social media and contact links" style="margin-top:2.5rem;"></div>
         </div>
@@ -1576,9 +1568,12 @@ class GhostEngine {
                 this.audio.ctx = new AC();
             }
             if (this.audio.ctx.state==='suspended' && this.audio.enabled) this.audio.ctx.resume();
-            removeEventListener('pointerdown',unlock); removeEventListener('keydown',unlock);
         };
-        addEventListener('pointerdown',unlock); addEventListener('keydown',unlock);
+        // Add robust mobile unlock events
+        ['pointerdown', 'touchstart', 'keydown'].forEach(e => 
+            window.addEventListener(e, unlock, { once: true })
+        );
+        
         toggle.addEventListener('click', () => {
             if (!this.audio.ctx) unlock();
             this.audio.enabled = !this.audio.enabled;
@@ -1649,13 +1644,6 @@ class GhostEngine {
                 duration: 1,
                 ease: "power4.out",
                 scrollTrigger: { trigger: el, start: "top 90%" }
-            });
-        });
-
-        gsap.utils.toArray('.sec-title .line').forEach(el => {
-            gsap.fromTo(el, { scaleX: 1 }, {
-                scaleX: 1, duration: 1.2, ease: "power3.inOut",
-                scrollTrigger: { trigger: el, start: "top 95%" }
             });
         });
 
