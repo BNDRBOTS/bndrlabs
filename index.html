@@ -1700,30 +1700,34 @@ class GhostEngine {
     }
 
     initScrollTriggers() {
-        gsap.utils.toArray('.split-text').forEach(el => {
-            gsap.to(el.querySelectorAll('.char'), {
-                y: '0%',
-                stagger: 0.02,
-                duration: 1,
-                ease: "power4.out",
-                scrollTrigger: { trigger: el, start: "top 90%" }
-            });
-        });
+        gsap.utils.toArray('.split-text').forEach(el => {
+            gsap.to(el.querySelectorAll('.char'), {
+                y: '0%',
+                stagger: 0.02,
+                duration: 1,
+                ease: "power4.out",
+                scrollTrigger: { trigger: el, start: "top 90%" }
+            });
+        });
 
-        gsap.utils.toArray('.sec-title .line').forEach(el => {
-            gsap.fromTo(el, { scaleX: 1 }, {
-                scaleX: 1, duration: 1.2, ease: "power3.inOut",
-                scrollTrigger: { trigger: el, start: "top 95%" }
-            });
-        });
+        gsap.utils.toArray('.sec-title .line').forEach(el => {
+            gsap.fromTo(el, { scaleX: 1 }, {
+                scaleX: 1, duration: 1.2, ease: "power3.inOut",
+                scrollTrigger: { trigger: el, start: "top 95%" }
+            });
+        });
 
-        ScrollTrigger.create({
-            trigger: '.pin-reveal-wrap',
-            start: "top 85%",
-            onEnter: () => document.querySelector('.pin-reveal-wrap').classList.add('revealed'),
-            once: true
-        });
+        gsap.fromTo('.hero-logo-reveal', 
+            { y: 60, opacity: 0 }, 
+            { y: 0, opacity: 1, duration: 1.2, ease: "power4.out", scrollTrigger: { trigger: '#sec-hero', start: "top 90%" } }
+        );
 
+        ScrollTrigger.create({
+            trigger: '.pin-reveal-wrap',
+            start: "top 85%",
+            onEnter: () => document.querySelector('.pin-reveal-wrap').classList.add('revealed'),
+            once: true
+        });
         ScrollTrigger.create({
             trigger: '#sec-pricing',
             start: "top 70%",
