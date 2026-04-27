@@ -129,7 +129,7 @@
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
             gap: 24px;
-            margin-top: 48px;
+            margin-bottom: 48px;
         }
 
         .gallery-card {
@@ -147,6 +147,7 @@
             box-shadow: inset 0 1px 1px rgba(255,255,255,0.5), 0 10px 30px -10px rgba(0,0,0,0.05);
             position: relative;
             overflow: hidden;
+            cursor: pointer;
         }
 
         .gallery-card::before {
@@ -536,19 +537,22 @@
             .footer-grid { grid-template-columns: auto 1fr auto; gap: 48px; align-items: start; } 
         }
         
-        .footer-logo { max-width: 48px; height: auto; display: block; margin-bottom: 8px; filter: brightness(0) invert(1); opacity: 0.5; transition: opacity 0.3s var(--ease-premium); }
+        .footer-logo { max-width: 110px; height: auto; display: block; margin-bottom: 16px; filter: brightness(0) invert(1); opacity: 0.5; transition: opacity 0.3s var(--ease-premium); }
         .footer-logo:hover { opacity: 1; }
         .footer-address { font-size: 10px; font-weight: 400; letter-spacing: 0.05em; line-height: 1.5; color: rgba(255,255,255,0.3); font-style: normal; }
         
         /* Unified Social Grid Angled Buttons */
         .connect-grid { 
-            display: flex; 
-            flex-wrap: wrap;
+            display: grid; 
+            grid-template-columns: repeat(2, 1fr);
             gap: 6px; 
+            max-width: 280px;
         }
         .connect-btn {
-            display: inline-flex; align-items: center; justify-content: center;
-            padding: 6px 12px; font-size: 9px; font-weight: 700; letter-spacing: 0.1em;
+            display: flex; align-items: center; justify-content: center;
+            width: 100%;
+            box-sizing: border-box;
+            padding: 8px 12px; font-size: 9px; font-weight: 700; letter-spacing: 0.1em;
             text-transform: uppercase; color: rgba(255,255,255,0.5); text-decoration: none;
             background: transparent; border: 1px solid rgba(255,255,255,0.1);
             border-radius: 0;
@@ -576,6 +580,7 @@
         /* Footer Mobile Adjustments */
         @media (max-width: 539px) {
             .legal-notice { flex-direction: column; align-items: flex-start; gap: 8px; }
+            .connect-grid { max-width: 100%; }
         }
 
         /* Modals inside Mobile */
@@ -725,12 +730,16 @@
                         <div class="connect-grid">
                             <a href="https://www.linkedin.com/in/bndrtech/" data-open="external" class="connect-btn">LinkedIn</a>
                             <a href="https://github.com/BNDRBOTS" data-open="external" class="connect-btn">GitHub</a>
+                            
                             <a href="https://substack.com/@bndrllc" data-open="external" class="connect-btn">Substack</a>
                             <a href="https://www.instagram.com/bndrllc" data-open="external" class="connect-btn">Instagram</a>
+                            
                             <a href="https://www.facebook.com/BNDRLLC" data-open="external" class="connect-btn">Facebook</a>
-                            <a href="https://bndrllc.gumroad.com/" data-open="external" class="connect-btn">Gumroad</a>
                             <a href="https://promptbase.com/profile/bndrllc" data-open="external" class="connect-btn">PromptBase</a>
+                            
+                            <a href="https://bndrllc.gumroad.com/" data-open="external" class="connect-btn">Gumroad</a>
                             <a href="https://buymeacoffee.com/bndr" data-open="external" class="connect-btn">Coffee</a>
+                            
                             <a href="https://propps.me/bndrllc" data-open="external" class="connect-btn">Propps</a>
                             <a href="https://www.youtube.com/@bndrllc" data-open="external" class="connect-btn">YouTube</a>
                         </div>
@@ -739,6 +748,9 @@
                         <button type="button" class="connect-btn connect-section-trigger" style="margin-bottom: 8px;" aria-controls="contact-modal">Start Project ↗</button>
                         <a href="mailto:bndr.labs@gmail.com" class="direct-link">bndr.labs@gmail.com</a>
                         <a href="tel:7179197731" class="direct-link">717-919-7731</a>
+                        <a href="https://propps.me/bndrllc" data-open="external" style="display: block; margin-top: 16px; width: 60px; opacity: 0.5; transition: opacity 0.3s var(--ease-premium);" onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='0.5'">
+                            <img src="https://www.dropbox.com/scl/fi/e9o6rynw1j50qp765rhqu/propps.me.bndrllc.png?rlkey=taitw7sji8z7p21nuaw9inrwm&st=yudzfww7&raw=1" alt="BNDR Propps" style="width: 100%; height: auto; filter: invert(1);">
+                        </a>
                     </div>
                 </div>
                 <div class="legal-notice reveal-up delay-3 io-element">
@@ -760,8 +772,8 @@
             </div>
             <h2 class="lead-text">Clinical Execution Index.</h2>
             
-            <div class="gallery-grid" id="clinical-gallery-grid">
-                <!-- Javascript will inject data nodes here to keep HTML clean -->
+            <div id="clinical-gallery-container">
+                <!-- Javascript will inject categorized grids here -->
             </div>
 
             <div class="gallery-footer-bar">
@@ -954,53 +966,96 @@
         isScrolling: false
     };
 
-    // New Gallery Appended Data
-    const galleryData = [
-        { name: "Liquid Glass", url: "https://bndrbots.github.io/liquidglass/" },
-        { name: "Forma", url: "https://bndrbots.github.io/forma/" },
-        { name: "Heavy Ink", url: "https://bndrbots.github.io/heavyink/" },
-        { name: "Oil Flux", url: "https://bndrbots.github.io/oilflux/" },
-        { name: "Zen", url: "https://bndrbots.github.io/zen/" },
-        { name: "Voss", url: "https://bndrbots.github.io/Voss/" },
-        { name: "Immersion", url: "https://bndrbots.github.io/immersion/" },
-        { name: "Shadow Graffiti", url: "https://bndrbots.github.io/ShadowGraffiti/" },
-        { name: "Life Space", url: "https://bndrbots.github.io/lifespace" },
-        { name: "Reflex", url: "https://bndrbots.github.io/reflex/" },
-        { name: "BNDR Voice", url: "https://bndrbots.github.io/BNDRVoice/" },
-        { name: "Jacksons", url: "https://bndrbots.github.io/jacksons/" },
-        { name: "Breathe Machine", url: "https://bndrbots.github.io/breathemachine/" },
-        { name: "SLCT", url: "https://bndrbots.github.io/slct/" },
-        { name: "Mind Can", url: "https://bndrbots.github.io/mindcan/" },
-        { name: "Controlled Output", url: "https://bndrbots.github.io/controlledoutput/" },
-        { name: "Resource Cite", url: "https://bndrbots.github.io/resourcecite/#home" },
-        { name: "Demo", url: "https://bndrbots.github.io/demo/" },
-        { name: "Rogue Rita Boss Pack", url: "https://bndrbots.github.io/RogueRita_CyberArena_BossPack/" },
-        { name: "Rogue Rita Vaporwave", url: "https://bndrbots.github.io/RogueRita_Vaporwave/" },
-        { name: "Rogue Rita V1", url: "https://bndrbots.github.io/RogueRitaV1/" },
-        { name: "Solar Expanse", url: "https://bndrbots.github.io/solarexpanse/" },
-        { name: "Binaural", url: "https://bndrbots.github.io/binaural/" }
+    // Refactored Data Payload: Hierarchical UI Sorting
+    const galleryCategories = [
+        {
+            title: "Concepts & Experiences",
+            items: [
+                { name: "Liquid Glass", url: "https://bndrbots.github.io/liquidglass/" },
+                { name: "Immersion", url: "https://bndrbots.github.io/immersion/" },
+                { name: "Demo", url: "https://bndrbots.github.io/demo/" },
+                { name: "Oil Flux", url: "https://bndrbots.github.io/oilflux/" },
+                { name: "Heavy Ink", url: "https://bndrbots.github.io/heavyink/" }
+            ]
+        },
+        {
+            title: "Brand & Architecture",
+            items: [
+                { name: "Voss", url: "https://bndrbots.github.io/Voss/" },
+                { name: "Forma", url: "https://bndrbots.github.io/forma/" },
+                { name: "Life Space", url: "https://bndrbots.github.io/lifespace" },
+                { name: "Jacksons", url: "https://bndrbots.github.io/jacksons/" },
+                { name: "Zen", url: "https://bndrbots.github.io/zen/" }
+            ]
+        },
+        {
+            title: "Games & Kinetics",
+            items: [
+                { name: "Rogue Rita Boss Pack", url: "https://bndrbots.github.io/RogueRita_CyberArena_BossPack/" },
+                { name: "Rogue Rita Vaporwave", url: "https://bndrbots.github.io/RogueRita_Vaporwave/" },
+                { name: "Rogue Rita V1", url: "https://bndrbots.github.io/RogueRitaV1/" },
+                { name: "Reflex", url: "https://bndrbots.github.io/reflex/" }
+            ]
+        },
+        {
+            title: "Utilities & Interaction",
+            items: [
+                { name: "BNDR Voice", url: "https://bndrbots.github.io/BNDRVoice/" },
+                { name: "Breathe Machine", url: "https://bndrbots.github.io/breathemachine/" },
+                { name: "SLCT", url: "https://bndrbots.github.io/slct/" },
+                { name: "Mind Can", url: "https://bndrbots.github.io/mindcan/" },
+                { name: "Controlled Output", url: "https://bndrbots.github.io/controlledoutput/" },
+                { name: "Resource Cite", url: "https://bndrbots.github.io/resourcecite/#home" },
+                { name: "Solar Expanse", url: "https://bndrbots.github.io/solarexpanse/" },
+                { name: "Binaural", url: "https://bndrbots.github.io/binaural/" }
+            ]
+        }
     ];
 
     function renderGalleryNodes() {
-        const grid = document.getElementById('clinical-gallery-grid');
-        if (!grid) return;
+        const container = document.getElementById('clinical-gallery-container');
+        if (!container) return;
         
-        galleryData.forEach((project, index) => {
-            const numStr = (index + 1).toString().padStart(3, '0');
-            const a = document.createElement('a');
-            a.href = project.url;
-            a.target = '_blank';
-            a.rel = 'noopener noreferrer';
-            a.className = 'gallery-card';
+        let globalIndex = 1;
+        
+        galleryCategories.forEach(category => {
+            const headerBlock = document.createElement('div');
+            headerBlock.className = 'section-header';
+            headerBlock.style.marginTop = '48px';
+            headerBlock.style.marginBottom = '24px';
+            headerBlock.innerHTML = `<div class="section-badge" style="background: rgba(2,2,2,0.03); border-color: rgba(2,2,2,0.05);">${category.title}</div>`;
+            container.appendChild(headerBlock);
             
-            a.innerHTML = `
-                <div>
-                    <div class="gallery-card-meta">IDX_${numStr} // LIVE</div>
-                    <h3>${project.name}</h3>
-                </div>
-                <div class="gallery-card-arrow">↗</div>
-            `;
-            grid.appendChild(a);
+            const grid = document.createElement('div');
+            grid.className = 'gallery-grid';
+            
+            category.items.forEach(project => {
+                const numStr = (globalIndex++).toString().padStart(3, '0');
+                const a = document.createElement('a');
+                a.href = project.url;
+                a.className = 'gallery-card gallery-preview-trigger'; // Bound to interaction logic
+                
+                a.innerHTML = `
+                    <div>
+                        <div class="gallery-card-meta">IDX_${numStr} // PREVIEW</div>
+                        <h3>${project.name}</h3>
+                    </div>
+                    <div class="gallery-card-arrow">👁</div>
+                `;
+                grid.appendChild(a);
+            });
+            container.appendChild(grid);
+        });
+
+        // Initialize high-efficiency preview logic
+        document.querySelectorAll('.gallery-preview-trigger').forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                document.getElementById('preview-title').textContent = link.querySelector('h3').textContent;
+                document.getElementById('preview-frame').src = link.href;
+                document.getElementById('preview-external-link').href = link.href;
+                SurfaceController.open('preview-modal', link);
+            });
         });
     }
 
@@ -1015,12 +1070,11 @@
             e.preventDefault();
             uiLayer.style.display = 'none';
             galleryLayer.style.display = 'block';
-            if (webgl) webgl.style.opacity = '0.05'; // Fade 3D bg for gallery focus
+            if (webgl) webgl.style.opacity = '0.05'; 
             window.scrollTo(0, 0);
         });
 
         btnHome.addEventListener('click', (e) => {
-            // Revert display logic
             galleryLayer.style.display = 'none';
             uiLayer.style.display = 'block';
             if (webgl) webgl.style.opacity = '1';
@@ -1053,6 +1107,8 @@
         
         document.querySelectorAll('[data-open="external"]').forEach(el => {
             el.addEventListener('click', e => {
+                // Ensure preview triggers do not fire generic external logic
+                if (el.classList.contains('gallery-preview-trigger')) return; 
                 e.preventDefault();
                 window.open(el.href, '_blank', 'noopener,noreferrer');
             });
@@ -1117,7 +1173,6 @@
                 const uiLayer = document.getElementById('ui-layer');
                 const galleryLayer = document.getElementById('gallery-layer');
                 
-                // Freeze whichever layer is currently active
                 const activeLayer = uiLayer.style.display !== 'none' ? uiLayer : galleryLayer;
 
                 if (activeLayer) {
@@ -1144,7 +1199,6 @@
                 const uiLayer = document.getElementById('ui-layer');
                 const galleryLayer = document.getElementById('gallery-layer');
                 
-                // Unfreeze both potential layers
                 [uiLayer, galleryLayer].forEach(layer => {
                     if (layer) {
                         layer.style.position = '';
@@ -1174,6 +1228,7 @@
             }
         };
 
+        window.SurfaceController = SurfaceController; // Expose strictly for dynamically bound nodes
         SurfaceController.init();
 
         document.getElementById('nav-pricing-btn').addEventListener('click', function() { SurfaceController.open('pricing-modal', this); });
